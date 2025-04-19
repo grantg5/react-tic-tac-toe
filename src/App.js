@@ -69,10 +69,12 @@ function calcWinner(squares, shape) {
 
   for (i = 0; i < boardSize; i++) {
     if (squares[i][i] != shape) {
+      console.log("diagnal dq");
       diagnalWinner = false;
     }
 
     if (squares[otherDiagnalCheck[0]][otherDiagnalCheck[1]] != shape) {
+      console.log("other diagnal dq");
       otherDiagnalWinner = false;
     }
 
@@ -84,10 +86,12 @@ function calcWinner(squares, shape) {
 
     for (j = 0; j < boardSize; j++) {
       if (squares[i][j] != shape) {
+        console.log("horizontal dq" + i + j);
         horizontalWinner = false;
       }
 
       if (squares[j][i] != shape) {
+        console.log("vertical dq" + i + j);
         verticalWinner = false;
         break;
       }
