@@ -1,7 +1,5 @@
 import { useState, memo } from "react";
 
-// todo: export to github after the fact
-
 const boardSize = 3;
 
 const Square = memo(function Square({ value, onSquareClick }) {
@@ -36,7 +34,7 @@ export default function Board() {
     }
 
     const squareCopy = squares.slice();
-    var currentShape = "X";
+    let currentShape = "X";
     if (!xTurn) {
       currentShape = "O";
     }
@@ -58,42 +56,36 @@ export default function Board() {
   return <>{squareGen}</>;
 }
 
-// TODO: Debug like all of it...
 function calcWinner(squares, shape) {
   const horizontalWinners = [];
   const verticalWinners = [];
 
-  var diagnalWinner = true;
-  var otherDiagnalWinner = true;
+  let diagnalWinner = true;
+  let otherDiagnalWinner = true;
   const otherDiagnalCheck = [0, boardSize - 1];
 
-  for (i = 0; i < boardSize; i++) {
+  for (let i = 0; i < boardSize; i++) {
     if (squares[i][i] != shape) {
-      console.log("diagnal dq");
       diagnalWinner = false;
     }
 
     if (squares[otherDiagnalCheck[0]][otherDiagnalCheck[1]] != shape) {
-      console.log("other diagnal dq");
       otherDiagnalWinner = false;
     }
 
-    otherDiagnalWinner[0]++;
-    otherDiagnalWinner[1]--;
+    otherDiagnalCheck[0]++;
+    otherDiagnalCheck[1]--;
 
-    var horizontalWinner = true;
-    var verticalWinner = true;
+    let horizontalWinner = true;
+    let verticalWinner = true;
 
-    for (j = 0; j < boardSize; j++) {
+    for (let j = 0; j < boardSize; j++) {
       if (squares[i][j] != shape) {
-        console.log("horizontal dq" + i + j);
         horizontalWinner = false;
       }
 
       if (squares[j][i] != shape) {
-        console.log("vertical dq" + i + j);
         verticalWinner = false;
-        break;
       }
     }
 
@@ -101,11 +93,15 @@ function calcWinner(squares, shape) {
     verticalWinners.push(verticalWinner);
   }
 
-  for (i = 0; i < boardSize; i++) {
-    if (horizontalWinners[i] || verticalWinners[i]) {
+  if (diagnalWinner || otherDiagnalWinner) {
+    return true;
+  }
+
+  for (let k = 0; k < boardSize; k++) {
+    if (horizontalWinners[k] || verticalWinners[k]) {
       return true;
-    } else {
-      return false;
     }
   }
+
+  return false;
 }
