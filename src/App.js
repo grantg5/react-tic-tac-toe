@@ -34,26 +34,26 @@ export default function Board() {
     }
 
     const squareCopy = squares.slice();
-    let currentShape = "X";
-    if (!xTurn) {
-      currentShape = "O";
-    }
 
-    if (xTurn) {
-      squareCopy[i][j] = currentShape;
-    } else {
-      squareCopy[i][j] = currentShape;
-    }
+    let currentShape = xTurn ? "X" : "O";
+    squareCopy[i][j] = currentShape;
 
     setsquares(squareCopy);
     setXTurn(!xTurn);
-
-    if (calcWinner(squares, currentShape)) {
-      console.log("Winner!");
-    }
   }
 
-  return <>{squareGen}</>;
+  let currentShape = xTurn ? "X" : "O";
+  let status = "Next player: " + currentShape;
+  if (calcWinner(squares, currentShape)) {
+    status = "Winner: " + currentShape;
+  }
+
+  return (
+    <>
+      {squareGen}
+      <div className="status">{status}</div>
+    </>
+  );
 }
 
 function calcWinner(squares, shape) {
